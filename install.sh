@@ -117,3 +117,35 @@ echo
 echo "이렇게 불러 보세요:"
 echo "   스레드 글 써줘"
 echo "   재료 폴더 만들어줘"
+
+# 예제가 딸린 스킬이 있으면 알려준다
+EXAMPLES=()
+for S in "${PICK[@]}"; do
+  [ -f "$DEST/$S/EXAMPLE.md" ] && EXAMPLES+=("$DEST/$S/EXAMPLE.md")
+done
+
+if [ ${#EXAMPLES[@]} -gt 0 ]; then
+  echo
+  echo "─────────────────────────────────────────"
+  echo "처음이라 막막하시죠?"
+  echo
+  echo "설치부터 글 한 편이 나올 때까지 화면에 실제로 뭐가 나오는지"
+  echo "그대로 보여주는 예제를 넣어뒀습니다."
+  echo
+  for E in "${EXAMPLES[@]}"; do echo "   $E"; done
+  echo
+  echo "클로드 코드에서 이렇게 말해도 됩니다:"
+  echo "   EXAMPLE.md 읽고 요약해줘"
+  echo
+  printf "지금 열어볼까요? (y/N) "
+  ANS=n; read -r ANS || true
+  case "$ANS" in
+    y|Y) for E in "${EXAMPLES[@]}"; do
+           if command -v open >/dev/null 2>&1; then open "$E"
+           elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$E"
+           else echo "   (여는 명령을 못 찾았습니다. 위 경로를 직접 여세요)"; fi
+         done
+         echo "   열었습니다." ;;
+    *)   echo "   나중에 보시려면 위 경로를 여시면 됩니다." ;;
+  esac
+fi

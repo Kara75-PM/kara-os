@@ -118,3 +118,32 @@ Write-Host ""
 Write-Host "이렇게 불러 보세요:" -ForegroundColor Cyan
 Write-Host "   스레드 글 써줘"
 Write-Host "   재료 폴더 만들어줘"
+
+# 예제가 딸린 스킬이 있으면 알려준다
+$examples = @()
+foreach ($s in $pick) {
+  $e = Join-Path $dest "$s\EXAMPLE.md"
+  if (Test-Path $e) { $examples += $e }
+}
+
+if ($examples.Count -gt 0) {
+  Write-Host ""
+  Write-Host "─────────────────────────────────────────"
+  Write-Host "처음이라 막막하시죠?" -ForegroundColor Cyan
+  Write-Host ""
+  Write-Host "설치부터 글 한 편이 나올 때까지 화면에 실제로 뭐가 나오는지"
+  Write-Host "그대로 보여주는 예제를 넣어뒀습니다."
+  Write-Host ""
+  foreach ($e in $examples) { Write-Host "   $e" }
+  Write-Host ""
+  Write-Host "클로드 코드에서 이렇게 말해도 됩니다:" -ForegroundColor Cyan
+  Write-Host "   EXAMPLE.md 읽고 요약해줘"
+  Write-Host ""
+  $ans = Read-Host "지금 열어볼까요? (y/N)"
+  if ($ans -eq "y" -or $ans -eq "Y") {
+    foreach ($e in $examples) { Invoke-Item $e }
+    Write-Host "   열었습니다."
+  } else {
+    Write-Host "   나중에 보시려면 위 경로를 여시면 됩니다."
+  }
+}

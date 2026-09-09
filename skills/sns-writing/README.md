@@ -80,7 +80,7 @@ bash "$D/install.sh" sns-writing
 find ~/.claude/skills/sns-writing -name '*.md'
 ```
 
-**문서 10개**가 나오면 성공입니다.
+**문서 11개**가 나오면 성공입니다.
 
 > 위 한 줄은 `kara-os` 를 통째로 받은 뒤 **무엇을 깔지 물어봅니다.**
 
@@ -151,6 +151,7 @@ find ~/.claude/skills/sns-writing -name '*.md'
 sns-writing/
   SKILL.md          클로드가 읽는 설명서 (사람은 안 읽어도 됩니다)
   README.md         이 파일
+  EXAMPLE.md        📖 한 판 굴러가는 모습 (사람이 읽는 것)
   CHANGES.md        원본에서 무엇을 바꿨는지
   templates/        예시가 채워진 견본 3개
   references/       더 자세한 참고 자료 4개
