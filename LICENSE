@@ -1,0 +1,34 @@
+MIT License
+
+Copyright (c) 2026 Kara75-PM
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+## 출처 표기 (NOTICE)
+
+`skills/sns-writing` 은 셀피시클럽 스폰지클럽 3기 스킬러스 유닛에서 공유된
+**노슈니(오수인)님의 `threads-writing`** 을 바탕으로 고쳐 만든 것입니다.
+
+- 무엇을 어떻게 바꿨는지: `skills/sns-writing/CHANGES.md`
+- 배포 허락: 2026-09-09 슬랙에서 노슈니님께 직접 받았습니다
+  ("배포 해주셔도 괜찮습니당")
+
+`skills/source-to-lead` 는 처음부터 새로 만든 것입니다.
