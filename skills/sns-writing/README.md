@@ -111,7 +111,7 @@ find ~/.claude/skills/sns-writing -name '*.md'
 그러면 클로드가 이렇게 합니다.
 
 ```
-① 폴더를 만듭니다                    sns-writing-private/
+① 폴더를 만듭니다                    kara-os-private/
 ② 예시가 채워진 파일 3개를 넣습니다     지우고 내 걸로 바꾸면 됩니다
 ③ 깃(git) 폴더인지 확인하고 물어봅니다
 ```
