@@ -118,7 +118,7 @@ find ~/.claude/skills/sns-writing -type f
 그래서 클로드가 이렇게 물어봅니다.
 
 ```
-이 폴더는 깃 저장소 안입니다.
+이 폴더는 깃으로 관리되고 있습니다.
 .gitignore 에 *-private/ 를 넣어 둘까요?
 ```
 
