@@ -40,8 +40,10 @@ show_list() {
   echo "이 저장소에 들어 있는 스킬:"
   local i=1 one
   for s in "${AVAIL[@]}"; do
-    one=$(sed -n '5,9p' "$SRC/skills/$s/README.md" 2>/dev/null | grep -m1 '[가-힣]' | sed 's/^[*> ]*//;s/\*\*//g')
-    printf "  %d) %-16s %s\n" "$i" "$s" "${one:0:56}"
+    # 맥 기본 bash(3.2)의 ${x:0:n} 은 바이트로 잘라서 한글이 깨진다. 자르지 않는다.
+    one=$(sed -n '5,9p' "$SRC/skills/$s/README.md" 2>/dev/null | grep -m1 '[가-힣]' \
+          | sed 's/^[*> ]*//;s/\*\*//g' | cut -d'.' -f1)
+    printf "  %d) %-16s %s\n" "$i" "$s" "$one"
     i=$((i+1))
   done
 }

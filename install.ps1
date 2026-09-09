@@ -46,7 +46,17 @@ function Show-List {
 if ($List) { Show-List; exit 0 }
 
 $pick = @()
-if ($Names -and $Names.Count -gt 0) {
+foreach ($n in $Names) {
+  if ($n -like '-*') {
+    Write-Host "모르는 옵션: $n" -ForegroundColor Red
+    Write-Host "쓸 수 있는 것: -All  -Local  -List  또는 스킬 이름"
+    Write-Host "(맥용 --all / --list 가 아니라 앞에 붙임표 하나입니다)"
+    exit 1
+  }
+}
+if ($All) {
+  $pick = $avail
+} elseif ($Names -and $Names.Count -gt 0) {
   foreach ($n in $Names) {
     if ($avail -notcontains $n) {
       Write-Host "[중단] '$n' 는 이 저장소에 없습니다." -ForegroundColor Red
@@ -54,8 +64,6 @@ if ($Names -and $Names.Count -gt 0) {
     }
     $pick += $n
   }
-} elseif ($All) {
-  $pick = $avail
 } else {
   Show-List
   Write-Host ""

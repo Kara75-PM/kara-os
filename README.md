@@ -119,7 +119,7 @@ D=$(mktemp -d) && git clone --depth 1 https://github.com/Kara75-PM/kara-os.git "
 **PowerShell** 을 열고 이 한 줄을 붙여넣으세요.
 
 ```powershell
-$d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 https://github.com/Kara75-PM/kara-os.git $d; powershell -ExecutionPolicy Bypass -File "$d\install.ps1"
+$d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 https://github.com/Kara75-PM/kara-os.git $d; if ($LASTEXITCODE -eq 0) { powershell -ExecutionPolicy Bypass -File "$d\install.ps1" } else { Write-Host "[중단] 받기에 실패했습니다. git 이 깔려 있는지 확인하세요." -ForegroundColor Red }
 ```
 
 ### 잘 됐는지 확인
@@ -127,8 +127,8 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 **맥 · 리눅스**
 
 ```bash
-find ~/.claude/skills/sns-writing -name '*.md'      # 문서 10개
-find ~/.claude/skills/source-to-lead -name '*.md'   # 문서 9개
+find ~/.claude/skills/sns-writing -name '*.md' | wc -l      # 10 이 나오면 성공
+find ~/.claude/skills/source-to-lead -name '*.md' | wc -l   # 9 가 나오면 성공
 ```
 
 **윈도우 (PowerShell)**
@@ -138,7 +138,7 @@ find ~/.claude/skills/source-to-lead -name '*.md'   # 문서 9개
 (Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\source-to-lead").Count   # 9
 ```
 
-두 줄 다 나오면 성공입니다.
+**숫자가 10 과 9 로 나오면 성공입니다.**
 
 ### 🔴 안 불릴 때 — 십중팔구 이것입니다
 
@@ -150,16 +150,35 @@ find ~/.claude/skills/source-to-lead -name '*.md'   # 문서 9개
 
 ### 지금 프로젝트에서만 쓰고 싶으면
 
-맥은 `bash "$D/install.sh" --local`, 윈도우는 `-Local` 을 붙이세요.
+맥은 맨 끝에 `--local`, 윈도우는 `-Local` 을 붙이세요.
+
+```bash
+D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.git "$D" && bash "$D/install.sh" --local
+```
+
+**이때는 확인 명령도 달라집니다** — 홈이 아니라 **지금 폴더**를 봅니다.
+
+```bash
+find ./.claude/skills -name '*.md' | wc -l      # 문서 19개 (둘 다 깔았을 때)
+```
 
 ### 하나만 깔고 싶으면 — 골라서 설치할 수 있습니다
 
 받은 폴더 안에서 이렇게 하시면 됩니다.
 
+**각각 통째로 붙여넣으시면 됩니다.** 앞부분은 다 같고 **맨 끝만** 다릅니다.
+
 ```bash
-bash "$D/install.sh" --list          # 뭐가 있는지 보기만
-bash "$D/install.sh" sns-writing     # 이것만
-bash "$D/install.sh" --all           # 전부
+# 뭐가 있는지 보기만 (아무것도 설치 안 함)
+D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.git "$D" && bash "$D/install.sh" --list
+```
+```bash
+# sns-writing 만
+D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.git "$D" && bash "$D/install.sh" sns-writing
+```
+```bash
+# 전부
+D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.git "$D" && bash "$D/install.sh" --all
 ```
 
 **아무 것도 안 붙이고 실행하면 목록을 보여주고 번호로 고르게 합니다.**
@@ -169,7 +188,7 @@ bash "$D/install.sh" --all           # 전부
 
 ### 같은 이름이 이미 있으면
 
-**지우지 않습니다.** 허락을 받은 뒤 `<이름>.old-날짜` 로 **옆에 치워둡니다.**
+**지우지 않습니다.** 허락을 받은 뒤 `<이름>.old-20260909-172506` 처럼 **날짜와 시각을 붙여 옆에 치워둡니다.**
 잘못됐으면 그 폴더 이름만 되돌리면 원래대로 돌아갑니다.
 `.old-` 폴더는 자동으로 안 없어지니, 필요 없어지면 직접 지우세요.
 
@@ -189,7 +208,8 @@ bash "$D/install.sh" --all           # 전부
 > 🔑 **직접 폴더를 만들지 마세요.** 위치가 조금만 달라도 도구가 못 찾습니다.
 > 클로드는 지금 어느 폴더에서 일하는지 알고 있어서 **틀릴 수가 없습니다.**
 
-만들어지면 **예시가 채워진 파일 3개**가 들어 있습니다. 지우고 내 이야기로 바꾸면 됩니다.
+만들어지면 **예시가 채워진 파일**이 들어 있습니다. 지우고 내 이야기로 바꾸면 됩니다.
+어느 도구가 만드느냐에 따라 **3개(`sns-writing`) 또는 4개(`source-to-lead`)** 입니다.
 
 | 파일 | 뭘 적나 |
 |---|---|
@@ -230,7 +250,7 @@ bash "$D/install.sh" --all           # 전부
 |---|---|
 | **스킬 (skill)** | 클로드에게 "이런 일은 이렇게 해라"라고 미리 적어둔 설명서 묶음 |
 | **클로드 코드** | 컴퓨터에서 클로드를 쓰는 프로그램. 파일을 읽고 쓸 수 있습니다 |
-| **재료 폴더** | 내 이야기(내가 누구인지·겪은 일·내 말투)를 적어두는 폴더. **도구 폴더 바깥**에 두며, 실제 이름은 `sns-writing-private/` 처럼 `-private` 로 끝납니다 |
+| **재료 폴더** | 내 이야기(내가 누구인지·겪은 일·내 말투)를 적어두는 폴더. **도구 폴더 바깥**에 둡니다. 실제 폴더 이름은 **`kara-os-private/`** 입니다 |
 | **첫 문장 (훅)** | 스레드의 첫 칸, 인스타의 첫 장. **여기서 볼지 말지가 갈립니다** |
 | **캐러셀** | 인스타에서 **옆으로 넘기는 여러 장짜리** 게시물 |
 | **칸** | **스레드 게시물 한 조각.** 스레드는 글을 여러 칸으로 이어 붙여 올립니다 |
