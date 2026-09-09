@@ -1,0 +1,5 @@
+# 재료 폴더는 절대 올리지 않는다 — 개인 이야기가 들어 있다
+*-private/
+
+.DS_Store
+Thumbs.db
