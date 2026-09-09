@@ -119,11 +119,21 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 
 ### 잘 됐는지 확인
 
+**맥 · 리눅스**
+
 ```bash
-find ~/.claude/skills/sns-writing -type f
+find ~/.claude/skills/sns-writing -type f      # 파일 10개
+find ~/.claude/skills/source-to-lead -type f   # 파일 9개
 ```
 
-**파일 10개**가 나오면 성공입니다. (윈도우는 `dir /s /b %USERPROFILE%\.claude\skills\sns-writing`)
+**윈도우 (PowerShell)**
+
+```powershell
+(Get-ChildItem -Recurse -File "$env:USERPROFILE\.claude\skills\sns-writing").Count      # 10
+(Get-ChildItem -Recurse -File "$env:USERPROFILE\.claude\skills\source-to-lead").Count   # 9
+```
+
+두 줄 다 나오면 성공입니다.
 
 ### 🔴 안 불릴 때 — 십중팔구 이것입니다
 
