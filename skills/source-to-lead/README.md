@@ -105,13 +105,21 @@ D=$(mktemp -d) && git clone --depth 1 https://github.com/Kara75-PM/kara-os.git "
 $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 https://github.com/Kara75-PM/kara-os.git $d; powershell -ExecutionPolicy Bypass -File "$d\install.ps1"
 ```
 
+### 이것만 깔고 싶으면
+
+```bash
+bash "$D/install.sh" source-to-lead
+```
+
+아무것도 안 붙이면 목록을 보여주고 번호로 고르게 합니다.
+
 ### 확인
 
 ```bash
-find ~/.claude/skills/source-to-lead -type f
+find ~/.claude/skills/source-to-lead -name '*.md'
 ```
 
-**파일 9개**가 나오면 성공입니다.
+**문서 9개**가 나오면 성공입니다.
 
 ### 🔴 설치했는데 안 불릴 때
 
@@ -120,7 +128,7 @@ find ~/.claude/skills/source-to-lead -type f
 
 ---
 
-## 「내 이야기 폴더」 만들기 — 안 만드셔도 됩니다
+## 「재료 폴더」 만들기 — 안 만드셔도 됩니다
 
 없으면 클로드가 물어보면서 진행합니다. **안 깨집니다.**
 
@@ -144,7 +152,7 @@ find ~/.claude/skills/source-to-lead -type f
 | `material-stash.md` | 겪은 일을 한 줄씩 |
 | `who-i-am.md` | 내가 누구인지 한두 줄 |
 
-> 글쓰기 도구(`sns-writing`)의 「내 이야기 폴더」가 이미 있으면 **그걸 같이 씁니다.**
+> 글쓰기 도구(`sns-writing`)의 「재료 폴더」가 이미 있으면 **그걸 같이 씁니다.**
 > 같은 걸 두 군데 두지 않습니다.
 
 ---

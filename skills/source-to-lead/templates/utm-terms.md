@@ -12,7 +12,8 @@
 | 인스타 프로필 | `instagram` | `profile_link` |
 | 인스타 스토리 | `instagram` | `story` |
 | 오픈채팅방 | `kakao_openchat` | `dm` |
-| 메일 | `email` | `email` |
+| 메일 본문 | `email` | `body` |
+| 메일 서명 | `email` | `signature` |
 | 전단 QR | `flyer` | `qr` |
 | 명함 QR | `namecard` | `qr` |
 

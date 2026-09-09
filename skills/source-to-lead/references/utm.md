@@ -10,7 +10,7 @@
 
 ```
 그냥 링크      https://내신청페이지.com
-꼬리표 붙인 것  https://내신청페이지.com?utm_source=threads&utm_medium=post&utm_campaign=0913
+꼬리표 붙인 것  https://내신청페이지.com?utm_source=threads&utm_medium=post&utm_campaign=0913_launch
                                         └────────── 이 뒷부분 ──────────┘
 ```
 
@@ -39,7 +39,7 @@
 |---|---|---|
 | **소문자만** | `Threads` `INSTAGRAM` | `threads` `instagram` |
 | **띄어쓰기 대신 밑줄** | `kakao open chat` | `kakao_openchat` |
-| **한글 쓰지 않는다** | `utm_source=스레드` | `utm_source=threads` |
+| **꼬리표 값에 한글을 쓰지 않는다** | `utm_source=스레드` | `utm_source=threads` |
 | **한 번 정한 말을 계속 쓴다** | `ig` / `insta` / `instagram` 섞어 씀 | **`instagram` 하나로 고정** |
 | **날짜는 앞에** | `launch_0913` | `0913_launch` (정렬이 맞는다) |
 
@@ -59,7 +59,8 @@
 | 오픈채팅방 | kakao_openchat | dm |
 | 전단 QR | flyer | qr |
 | 명함 QR | namecard | qr |
-| 메일 | email | email |
+| 메일 본문 | email | body |
+| 메일 서명 | email | signature |
 ```
 
 ---
