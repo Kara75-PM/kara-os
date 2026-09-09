@@ -195,6 +195,9 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 
 ---
 
+> 📖 **글로 읽는 것보다 한 판 굴러가는 걸 보는 게 빠릅니다.**
+> **[EXAMPLE.md](EXAMPLE.md)** — 설치부터 글 한 편이 나올 때까지 화면 그대로
+
 ## 처음 써보기 — 20분
 
 ### 1. 「재료 폴더」를 만듭니다
