@@ -119,7 +119,7 @@ bash "$D/install.sh" source-to-lead
 find ~/.claude/skills/source-to-lead -name '*.md'
 ```
 
-**문서 9개**가 나오면 성공입니다.
+**문서 10개**가 나오면 성공입니다.
 
 ### 🔴 설치했는데 안 불릴 때
 
@@ -163,6 +163,7 @@ find ~/.claude/skills/source-to-lead -name '*.md'
 source-to-lead/
   SKILL.md          클로드가 읽는 설명서 (사람은 안 읽어도 됩니다)
   README.md         이 파일
+  EXAMPLE.md        📖 한 판 굴러가는 모습 (사람이 읽는 것)
   templates/        예시가 채워진 견본 4개
   references/       더 자세한 참고 자료 3개
 ```

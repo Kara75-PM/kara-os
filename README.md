@@ -128,17 +128,17 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 
 ```bash
 find ~/.claude/skills/sns-writing -name '*.md' | wc -l      # 11 이 나오면 성공
-find ~/.claude/skills/source-to-lead -name '*.md' | wc -l   # 9 가 나오면 성공
+find ~/.claude/skills/source-to-lead -name '*.md' | wc -l   # 10 이 나오면 성공
 ```
 
 **윈도우 (PowerShell)**
 
 ```powershell
 (Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\sns-writing").Count      # 11
-(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\source-to-lead").Count   # 9
+(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\source-to-lead").Count   # 10
 ```
 
-**숫자가 11 과 9 로 나오면 성공입니다.**
+**숫자가 11 과 10 으로 나오면 성공입니다.**
 
 ### 🔴 안 불릴 때 — 십중팔구 이것입니다
 
@@ -159,7 +159,7 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 **이때는 확인 명령도 달라집니다** — 홈이 아니라 **지금 폴더**를 봅니다.
 
 ```bash
-find ./.claude/skills -name '*.md' | wc -l      # 문서 20개 (둘 다 깔았을 때)
+find ./.claude/skills -name '*.md' | wc -l      # 문서 21개 (둘 다 깔았을 때)
 ```
 
 ### 하나만 깔고 싶으면 — 골라서 설치할 수 있습니다
@@ -196,7 +196,8 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 ---
 
 > 📖 **글로 읽는 것보다 한 판 굴러가는 걸 보는 게 빠릅니다.**
-> **[EXAMPLE.md](skills/sns-writing/EXAMPLE.md)** — 설치부터 글 한 편이 나올 때까지 화면 그대로
+> **[sns-writing 예제](skills/sns-writing/EXAMPLE.md)** — 설치부터 글 한 편이 나올 때까지
+> **[source-to-lead 예제](skills/source-to-lead/EXAMPLE.md)** — 이야기 하나가 배치표까지 (같은 이야기로 이어집니다)
 > 설치하면 `~/.claude/skills/sns-writing/EXAMPLE.md` 로 **손에 남습니다.**
 
 ## 처음 써보기 — 20분
