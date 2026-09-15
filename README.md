@@ -1,6 +1,6 @@
 # 카라 OS
 
-**클로드(Claude)에게 SNS 글쓰기를 시킬 때 쓰는 도구 두 개입니다.**
+**클로드(Claude)에게 SNS 글쓰기를 시킬 때 쓰는 도구 세 개입니다.**
 
 내 이야기를 한 번만 적어두면, 그다음부터는 매번 설명하지 않아도 내 말투로 글을 써 줍니다.
 
@@ -43,7 +43,23 @@
 **왜 링크가 어떤 글엔 없냐면** — 매 글마다 링크를 붙이면 사람들이 그 계정을 광고로 봅니다.
 그래서 **믿게 만드는 글 두 편에 보내는 글 한 편** 비율로 짭니다.
 
-**둘은 따로 써도 됩니다.** 하나만 설치해도 잘 돕니다.
+### 도구 3 · `material-harvest` — 쓸 이야기를 찾아 줍니다
+
+```
+소재 좀 캐줘
+```
+
+어제 클로드와 나눈 대화를 다시 읽고, **글이 될 만한 일**만 건져 표로 보여줍니다.
+
+```
+#   소재                                         남은 숫자       어디서
+4   새로 깐 앱을 첫 화면에서 그냥 껐다. 왜인지 몰랐다   —              기획 회의 창 · 어제
+5   사용자 테스트 5명 중 아무도 그 버튼을 안 눌렀다     5명 중 0명      화면 설계 창 · 어제
+```
+
+**고른 것만** 「재료 폴더」의 `material-stash.md` 에 쌓습니다. 그다음은 도구 1 로 글을 쓰면 됩니다.
+
+**셋은 따로 써도 됩니다.** 하나만 설치해도 잘 돕니다.
 
 ---
 
@@ -76,6 +92,7 @@
 | **돈이 드나요?** | 안 듭니다 |
 | **프로그램을 깔거나 설정을 바꾸나요?** | 안 합니다 |
 | **내 개인 이야기는 어디 있나요?** | **내 컴퓨터의 「재료 폴더」 안에만** 있습니다 |
+| **내 클로드 대화 기록을 읽나요?** | **`material-harvest` 만 읽습니다.** 폴더와 창을 **물어보고 고른 것만**, 그중 **내가 한 말만** 읽습니다. 고르기 전엔 열지 않습니다. 읽은 내용은 지금 쓰고 있는 클로드와의 대화 안에서만 쓰입니다 |
 
 ### 🔴 딱 하나 조심할 것
 
@@ -127,18 +144,20 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 **맥 · 리눅스**
 
 ```bash
-find ~/.claude/skills/sns-writing -name '*.md' | wc -l      # 11 이 나오면 성공
-find ~/.claude/skills/source-to-lead -name '*.md' | wc -l   # 10 이 나오면 성공
+find ~/.claude/skills/sns-writing -name '*.md' | wc -l        # 11 이 나오면 성공
+find ~/.claude/skills/source-to-lead -name '*.md' | wc -l     # 10 이 나오면 성공
+find ~/.claude/skills/material-harvest -name '*.md' | wc -l   # 3 이 나오면 성공
 ```
 
 **윈도우 (PowerShell)**
 
 ```powershell
-(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\sns-writing").Count      # 11
-(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\source-to-lead").Count   # 10
+(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\sns-writing").Count        # 11
+(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\source-to-lead").Count     # 10
+(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\material-harvest").Count   # 3
 ```
 
-**숫자가 11 과 10 으로 나오면 성공입니다.**
+**깐 도구마다 11 · 10 · 3 이 나오면 성공입니다.** 하나만 까셨으면 그 줄만 보시면 됩니다.
 
 ### 🔴 안 불릴 때 — 십중팔구 이것입니다
 
@@ -159,7 +178,7 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 **이때는 확인 명령도 달라집니다** — 홈이 아니라 **지금 폴더**를 봅니다.
 
 ```bash
-find ./.claude/skills -name '*.md' | wc -l      # 문서 21개 (둘 다 깔았을 때)
+find ./.claude/skills -name '*.md' | wc -l      # 문서 24개 (셋 다 깔았을 때)
 ```
 
 ### 하나만 깔고 싶으면 — 골라서 설치할 수 있습니다
@@ -198,6 +217,7 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 > 📖 **글로 읽는 것보다 한 판 굴러가는 걸 보는 게 빠릅니다.**
 > **[sns-writing 예제](skills/sns-writing/EXAMPLE.md)** — 설치부터 글 한 편이 나올 때까지
 > **[source-to-lead 예제](skills/source-to-lead/EXAMPLE.md)** — 이야기 하나가 배치표까지 (같은 이야기로 이어집니다)
+> **[material-harvest 예제](skills/material-harvest/EXAMPLE.md)** — 「소재 좀 캐줘」부터 보관소에 두 줄 들어갈 때까지 (같은 인물입니다)
 > 설치하면 `~/.claude/skills/sns-writing/EXAMPLE.md` 로 **손에 남습니다.**
 
 ## 처음 써보기 — 20분
@@ -281,6 +301,7 @@ kara-os/
   install.sh        맥·리눅스에서 설치할 때 실행되는 파일
   install.ps1       윈도우용
   skills/
+    material-harvest/ 쓸 이야기를 찾는 도구
     sns-writing/      글 쓰는 도구
     source-to-lead/   어디로 보낼지 정하는 도구
 ```
@@ -297,6 +318,8 @@ kara-os/
 
 > **`references/` 가 없어도 도구는 돕니다.** `SKILL.md` 안에 핵심 요약이 들어 있습니다.
 > 다만 예시 문장이 빠지므로 **통째로 받으시는 게 좋습니다.**
+>
+> `material-harvest` 는 **`SKILL.md` · `README.md` · `EXAMPLE.md` 세 장**입니다. 견본(`templates/`)은 따로 없고, 「재료 폴더」는 `sns-writing` 과 같은 것을 씁니다.
 
 ---
 
@@ -306,7 +329,7 @@ kara-os/
 **노슈니(오수인)님의 `threads-writing`** 을 바탕으로 고쳐 만든 것입니다.
 무엇을 어떻게 바꿨는지는 `skills/sns-writing/CHANGES.md` 에 적혀 있습니다.
 
-`source-to-lead` 는 처음부터 새로 만든 것입니다.
+`source-to-lead` · `material-harvest` 는 처음부터 새로 만든 것입니다.
 
 **라이선스: MIT** — 마음대로 쓰고 고치고 다시 나눠주셔도 됩니다. (`LICENSE` 참고)
 
