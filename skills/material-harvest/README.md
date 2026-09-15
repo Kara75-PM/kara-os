@@ -116,7 +116,7 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 find ~/.claude/skills/material-harvest -name '*.md'
 ```
 
-**문서 2개**가 나오면 성공입니다.
+**문서 3개**(SKILL · README · EXAMPLE)가 나오면 성공입니다.
 
 ### 🔴 설치했는데 안 불릴 때
 
