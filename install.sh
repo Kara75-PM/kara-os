@@ -11,11 +11,26 @@
 # 이 스크립트는 파일을 지우지 않습니다.
 # 무엇을 할지 먼저 보여주고 「y」를 받은 뒤에만 설치합니다. 그냥 엔터는 언제나 「안 한다」입니다.
 # 같은 이름이 이미 있으면, 하나씩 따로 묻고 <이름>.old-날짜 로 옆에 치워둡니다.
+
+# 「sh install.sh」·「zsh install.sh」로 실행하면 아래 배열 문법에서 알 수 없는 오류로 멈춘다.
+# bash 가 있으면 bash 로 다시 실행하고, 없으면 무엇을 하면 되는지 알려준다.
+if [ -z "$BASH_VERSION" ]; then
+  if [ -f "$0" ] && command -v bash >/dev/null 2>&1; then exec bash "$0" "$@"; fi
+  echo "[중단] 이 스크립트는 bash 로 실행해야 합니다:  bash install.sh"
+  exit 1
+fi
 set -e
 
 SRC="$(cd "$(dirname "$0")" && pwd)"
 DEST="$HOME/.claude/skills"
 PICK=(); ALL=""; LIST=""
+
+# 이미 고른 것인지. 같은 것을 두 번 골라도 계획에 두 줄로 나오지 않게 한다. (bash 3.2 엔 연관 배열이 없다)
+picked() {
+  local x
+  for x in "${PICK[@]}"; do [ "$x" = "$1" ] && return 0; done
+  return 1
+}
 
 for a in "$@"; do
   case "$a" in
@@ -23,7 +38,12 @@ for a in "$@"; do
     --all)   ALL=1 ;;
     --list)  LIST=1 ;;
     -*)      echo "모르는 옵션: $a"; echo "쓸 수 있는 것: --all  --local  --list  또는 스킬 이름"; exit 1 ;;
-    *)       PICK+=("$a") ;;
+    *)
+      # 탭 자동완성으로 붙는 「sns-writing/」·「skills/sns-writing/」도 이름만 받는다.
+      # (맥의 cp -R 은 끝에 / 가 붙으면 폴더가 아니라 안의 파일을 쏟아 넣는다)
+      while [ "${a%/}" != "$a" ]; do a="${a%/}"; done
+      a="${a##*/}"
+      picked "$a" || PICK+=("$a") ;;
   esac
 done
 
@@ -43,7 +63,7 @@ show_list() {
   for s in "${AVAIL[@]}"; do
     # 맥 기본 bash(3.2)의 ${x:0:n} 은 바이트로 잘라서 한글이 깨진다. 자르지 않는다.
     one=$(sed -n '5,9p' "$SRC/skills/$s/README.md" 2>/dev/null | grep -m1 '[가-힣]' \
-          | sed 's/^[*> ]*//;s/\*\*//g' | cut -d'.' -f1)
+          | sed 's/^[*> ]*//;s/\*\*//g')
     printf "  %d) %-16s %s\n" "$i" "$s" "$one"
     i=$((i+1))
   done
@@ -67,13 +87,14 @@ if [ ${#PICK[@]} -eq 0 ] && [ -z "$ALL" ]; then
   echo
   printf "무엇을 설치할까요? 번호를 띄어쓰기로 (전부 설치는 그냥 엔터 — 설치 전에 한 번 더 묻습니다): "
   ANS=""; read -r ANS || true
-  if [ -z "$ANS" ]; then
+  ANS="${ANS//,/ }"   # 「1,2」처럼 쉼표로 쳐도 받는다
+  if [ -z "${ANS// /}" ]; then
     PICK=("${AVAIL[@]}")
   else
     for n in $ANS; do
       case "$n" in ''|*[!0-9]*) echo "[중단] '$n' 은 번호가 아닙니다. 아무것도 설치하지 않았습니다."; exit 1 ;; esac
-      idx=$((n-1))
-      if [ "$idx" -ge 0 ] && [ "$idx" -lt ${#AVAIL[@]} ]; then PICK+=("${AVAIL[$idx]}")
+      idx=$((10#$n - 1))   # 「08」을 8진수로 읽어 멈추지 않게 10진수로 못 박는다
+      if [ "$idx" -ge 0 ] && [ "$idx" -lt ${#AVAIL[@]} ]; then picked "${AVAIL[$idx]}" || PICK+=("${AVAIL[$idx]}")
       else echo "[중단] $n 번은 없는 번호입니다. 아무것도 설치하지 않았습니다."; exit 1; fi
     done
   fi
@@ -179,13 +200,18 @@ fi
 echo
 echo "설치한 곳:   $DEST"
 echo "받아온 원본: $SRC"
-echo "             (임시 폴더입니다. 컴퓨터를 끄면 사라지니 필요하면 옮겨두세요)"
+TMPROOT="${TMPDIR:-/tmp}"
+case "$SRC" in
+  "${TMPROOT%/}"/*|/tmp/*|/private/tmp/*|/var/folders/*|/private/var/folders/*)
+    echo "             (임시 폴더입니다. 컴퓨터를 끄면 사라지니 필요하면 옮겨두세요)" ;;
+esac
 echo
 echo "이렇게 불러 보세요:"
 for S in "${INSTALLED[@]}"; do
   case "$S" in
     sns-writing)      echo "   스레드 글 써줘"; echo "   재료 폴더 만들어줘" ;;
     material-harvest) echo "   소재 좀 캐줘" ;;
+    source-to-lead)   echo "   이 소재로 콘텐츠 만들어줘" ;;
   esac
 done
 
@@ -213,12 +239,18 @@ if [ ${#EXAMPLES[@]} -gt 0 ]; then
   echo "   엔터  → 열지 않고 끝냅니다. 설치는 취소되지 않습니다. 나중에 위 경로를 여시면 됩니다"
   printf "> "
   if ask_yes; then
-    for E in "${EXAMPLES[@]}"; do
-      if command -v open >/dev/null 2>&1; then open "$E"
-      elif command -v xdg-open >/dev/null 2>&1; then xdg-open "$E"
-      else echo "   (여는 명령을 못 찾았습니다. 위 경로를 직접 여세요)"; fi
-    done
-    echo "   열었습니다."
+    # 여는 데 실패해도(화면 없는 리눅스·WSL, .md 에 연결된 앱 없음) 설치는 끝났으니 오류로 멈추지 않는다.
+    OPENER=""
+    if command -v open >/dev/null 2>&1; then OPENER=open
+    elif command -v xdg-open >/dev/null 2>&1; then OPENER=xdg-open; fi
+    if [ -z "$OPENER" ]; then
+      echo "   (여는 명령을 못 찾았습니다. 위 경로를 직접 여세요. 설치는 그대로 끝났습니다)"
+    else
+      OPEN_FAIL=0
+      for E in "${EXAMPLES[@]}"; do "$OPENER" "$E" >/dev/null 2>&1 || OPEN_FAIL=1; done
+      if [ "$OPEN_FAIL" = "0" ]; then echo "   열었습니다."
+      else echo "   (열지 못한 파일이 있습니다. 위 경로를 직접 여세요. 설치는 그대로 끝났습니다)"; fi
+    fi
   else
     echo "   열지 않았습니다. 설치는 그대로 끝났습니다."
   fi
