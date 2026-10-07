@@ -6,7 +6,7 @@
 #   powershell -ExecutionPolicy Bypass -File install.ps1 -Local             지금 폴더에만
 #   powershell -ExecutionPolicy Bypass -File install.ps1 -List              보기만
 #
-# 이 스크립트는 파일을 지우지 않습니다.
+# 이 스크립트는 파일을 지우지 않습니다. 옛 판은 스킬 폴더 바깥의 skills-backup\ 으로 옮겨 둘 뿐입니다.
 # 무엇을 할지 먼저 보여주고 「y」를 받은 뒤에만 설치합니다. 그냥 엔터는 언제나 「안 한다」입니다.
 # 같은 이름이 이미 있으면, 하나씩 따로 묻고 <이름>.old-날짜 로 옆에 치워둡니다.
 param(
@@ -18,6 +18,8 @@ $ErrorActionPreference = "Stop"
 $src = $PSScriptRoot
 if ($Local) { $dest = Join-Path (Get-Location) ".claude\skills" }
 else        { $dest = Join-Path $env:USERPROFILE ".claude\skills" }
+# 옛 판은 스킬 폴더 「바깥」에 둔다. 안에 두면 클로드 코드가 옛 판도 스킬로 읽어 같은 스킬이 둘 잡힌다.
+$backup = Join-Path (Split-Path $dest -Parent) "skills-backup"
 
 $avail = @()
 Get-ChildItem -Directory (Join-Path $src "skills") -ErrorAction SilentlyContinue | ForEach-Object {
@@ -106,6 +108,21 @@ foreach ($s in $pick) {
   else { Write-Host "   [이미 있음]   $s  — 바꿀지 따로 한 번 더 묻습니다" -ForegroundColor Yellow; $diffN++ }
 }
 Write-Host ""
+
+# 예전 설치기는 옛 판을 스킬 폴더 「안」에 남겼다. 알려만 주고 건드리지는 않는다.
+$leftover = @()
+if (Test-Path $dest) {
+  Get-ChildItem -Directory $dest -Filter "*.old-*" | ForEach-Object {
+    if (Test-Path (Join-Path $_.FullName "SKILL.md")) { $leftover += $_.Name }
+  }
+}
+if ($leftover.Count -gt 0) {
+  Write-Host "   ⚠️ 스킬 폴더 안에 예전에 치워둔 옛 판이 남아 있습니다: $($leftover -join ' ')" -ForegroundColor Yellow
+  Write-Host "      클로드 코드가 같은 스킬을 두 번 잡을 수 있습니다. 이 스크립트는 건드리지 않습니다."
+  Write-Host "      필요 없으면 지우시고, 남겨두려면 $backup 로 옮기세요."
+  Write-Host ""
+}
+
 if (($newN + $diffN) -eq 0) {
   Write-Host "고른 스킬이 모두 이미 같은 판으로 설치돼 있습니다. 바꿀 것이 없어 끝냅니다."
   exit 0
@@ -131,15 +148,16 @@ foreach ($s in $pick) {
     if (Same-Dir (Join-Path $src "skills\$s") $target) { Write-Host "[그대로] $s  이미 같은 판입니다"; continue }
     Write-Host ""
     Write-Host "[확인] $s 이(가) 이미 설치돼 있고, 새 판과 내용이 다릅니다." -ForegroundColor Yellow
-    Write-Host "   y     → 지금 것을 $s.old-<날짜> 로 옆에 옮기고 새 판을 넣습니다. 지우지 않습니다."
+    Write-Host "   y     → 지금 것을 $backup\$s.old-<날짜> 로 옮기고 새 판을 넣습니다. 지우지 않습니다."
     Write-Host "           ⚠️ 이 폴더 안을 직접 고치셨다면, 고친 내용은 새 판에 없습니다."
-    Write-Host "              .old 폴더에 그대로 남아 있으니 필요한 부분을 옮겨 오시면 됩니다."
+    Write-Host "              옮겨 둔 옛 판에 그대로 남아 있으니 필요한 부분을 옮겨 오시면 됩니다."
     Write-Host "   엔터  → 이 스킬만 건너뜁니다. 지금 깔린 것을 그대로 둡니다."
     Write-Host "           나머지 스킬 설치는 계속합니다. 이 스킬은 옛 판으로 남습니다."
     if (Ask-Yes "   바꿀까요? (y/N)") {
       $old = "$s.old-" + (Get-Date -Format "yyyyMMdd-HHmmss")
-      Rename-Item -Path $target -NewName $old
-      Write-Host "   옆으로 치워뒀습니다 -> $old"
+      New-Item -ItemType Directory -Force -Path $backup | Out-Null
+      Move-Item -Path $target -Destination (Join-Path $backup $old)
+      Write-Host "   치워뒀습니다 -> $(Join-Path $backup $old)"
       $moved += $old
     } else {
       Write-Host "   건너뜁니다. $s 은(는) 그대로입니다."
@@ -157,7 +175,7 @@ Write-Host ""
 Write-Host "== 결과 ==" -ForegroundColor Cyan
 if ($installed.Count -gt 0) { Write-Host "   설치함:   $($installed -join ' ')" }
 if ($skipped.Count -gt 0)   { Write-Host "   건너뜀:   $($skipped -join ' ')  (옛 판 그대로)" }
-if ($moved.Count -gt 0)     { Write-Host "   치워둔 것: $($moved -join ' ')  (자동으로 안 지워집니다. 필요 없으면 직접 지우세요)" }
+if ($moved.Count -gt 0)     { Write-Host "   치워둔 것: $($moved -join ' ')  ($backup 안. 자동으로 안 지워집니다. 필요 없으면 직접 지우세요)" }
 if ($installed.Count -eq 0) {
   Write-Host ""
   Write-Host "새로 설치한 것이 없습니다. 끝냅니다."

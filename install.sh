@@ -8,7 +8,7 @@
 #   bash install.sh --local ...           지금 폴더의 .claude/skills 에만
 #   bash install.sh --list                뭐가 있는지 보기만 (아무것도 안 함)
 #
-# 이 스크립트는 파일을 지우지 않습니다.
+# 이 스크립트는 파일을 지우지 않습니다. 옛 판은 스킬 폴더 바깥의 skills-backup/ 으로 옮겨 둘 뿐입니다.
 # 무엇을 할지 먼저 보여주고 「y」를 받은 뒤에만 설치합니다. 그냥 엔터는 언제나 「안 한다」입니다.
 # 같은 이름이 이미 있으면, 하나씩 따로 묻고 <이름>.old-날짜 로 옆에 치워둡니다.
 set -e
@@ -26,6 +26,9 @@ for a in "$@"; do
     *)       PICK+=("$a") ;;
   esac
 done
+
+# 옛 판은 스킬 폴더 「바깥」에 둔다. 안에 두면 클로드 코드가 옛 판도 스킬로 읽어 같은 스킬이 둘 잡힌다.
+BACKUP="$(dirname "$DEST")/skills-backup"
 
 AVAIL=()
 for d in "$SRC"/skills/*/; do
@@ -104,6 +107,18 @@ for S in "${PICK[@]}"; do
 done
 echo
 
+# 예전 설치기는 옛 판을 스킬 폴더 「안」에 남겼다. 알려만 주고 건드리지는 않는다.
+LEFTOVER=()
+for d in "$DEST"/*.old-*/; do
+  [ -f "$d/SKILL.md" ] && LEFTOVER+=("$(basename "$d")")
+done
+if [ ${#LEFTOVER[@]} -gt 0 ]; then
+  echo "   ⚠️ 스킬 폴더 안에 예전에 치워둔 옛 판이 남아 있습니다: ${LEFTOVER[*]}"
+  echo "      클로드 코드가 같은 스킬을 두 번 잡을 수 있습니다. 이 스크립트는 건드리지 않습니다."
+  echo "      필요 없으면 지우시고, 남겨두려면 $BACKUP 로 옮기세요."
+  echo
+fi
+
 if [ $((NEW_N+DIFF_N)) -eq 0 ]; then
   echo "고른 스킬이 모두 이미 같은 판으로 설치돼 있습니다. 바꿀 것이 없어 끝냅니다."
   exit 0
@@ -134,16 +149,17 @@ for S in "${PICK[@]}"; do
     fi
     echo
     echo "[확인] $S 이(가) 이미 설치돼 있고, 새 판과 내용이 다릅니다."
-    echo "   y     → 지금 것을 $S.old-<날짜> 로 옆에 옮기고 새 판을 넣습니다. 지우지 않습니다."
+    echo "   y     → 지금 것을 $BACKUP/$S.old-<날짜> 로 옮기고 새 판을 넣습니다. 지우지 않습니다."
     echo "           ⚠️ 이 폴더 안을 직접 고치셨다면, 고친 내용은 새 판에 없습니다."
-    echo "              .old 폴더에 그대로 남아 있으니 필요한 부분을 옮겨 오시면 됩니다."
+    echo "              옮겨 둔 옛 판에 그대로 남아 있으니 필요한 부분을 옮겨 오시면 됩니다."
     echo "   엔터  → 이 스킬만 건너뜁니다. 지금 깔린 것을 그대로 둡니다."
     echo "           나머지 스킬 설치는 계속합니다. 이 스킬은 옛 판으로 남습니다."
     printf "   바꿀까요? (y/N) > "
     if ask_yes; then
       OLD="$S.old-$(date +%Y%m%d-%H%M%S)"
-      mv "$DEST/$S" "$DEST/$OLD"
-      echo "   옆으로 치워뒀습니다 → $OLD"
+      mkdir -p "$BACKUP"
+      mv "$DEST/$S" "$BACKUP/$OLD"
+      echo "   치워뒀습니다 → $BACKUP/$OLD"
       MOVED+=("$OLD")
     else
       echo "   건너뜁니다. $S 은(는) 그대로입니다."
@@ -161,7 +177,7 @@ echo
 echo "== 결과 =="
 [ ${#INSTALLED[@]} -gt 0 ] && echo "   설치함:   ${INSTALLED[*]}"
 [ ${#SKIPPED[@]} -gt 0 ]   && echo "   건너뜀:   ${SKIPPED[*]}  (옛 판 그대로)"
-[ ${#MOVED[@]} -gt 0 ]     && echo "   치워둔 것: ${MOVED[*]}  (자동으로 안 지워집니다. 필요 없으면 직접 지우세요)"
+[ ${#MOVED[@]} -gt 0 ]     && echo "   치워둔 것: ${MOVED[*]}  ($BACKUP 안. 자동으로 안 지워집니다. 필요 없으면 직접 지우세요)"
 
 if [ ${#INSTALLED[@]} -eq 0 ]; then
   echo
