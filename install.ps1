@@ -180,6 +180,7 @@ Write-Host "이렇게 불러 보세요:" -ForegroundColor Cyan
 foreach ($s in $installed) {
   if ($s -eq "sns-writing")      { Write-Host "   스레드 글 써줘"; Write-Host "   재료 폴더 만들어줘" }
   if ($s -eq "material-harvest") { Write-Host "   소재 좀 캐줘" }
+  if ($s -eq "source-to-lead")   { Write-Host "   이 소재로 콘텐츠 만들어줘" }
 }
 
 # 이번에 설치한 스킬 중 예제가 딸린 것이 있으면 알려준다
@@ -206,8 +207,11 @@ if ($examples.Count -gt 0) {
   Write-Host "   y     → 예제 파일을 기본 앱으로 엽니다"
   Write-Host "   엔터  → 열지 않고 끝냅니다. 설치는 취소되지 않습니다. 나중에 위 경로를 여시면 됩니다"
   if (Ask-Yes ">") {
-    foreach ($e in $examples) { Invoke-Item $e }
-    Write-Host "   열었습니다."
+    # .md 에 연결된 앱이 없으면 Invoke-Item 이 오류를 던진다. 설치는 끝났으니 멈추지 않는다.
+    $openFail = $false
+    foreach ($e in $examples) { try { Invoke-Item $e } catch { $openFail = $true } }
+    if (-not $openFail) { Write-Host "   열었습니다." }
+    else { Write-Host "   (열지 못한 파일이 있습니다. 위 경로를 직접 여세요. 설치는 그대로 끝났습니다)" }
   } else {
     Write-Host "   열지 않았습니다. 설치는 그대로 끝났습니다."
   }
