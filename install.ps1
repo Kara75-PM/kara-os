@@ -8,7 +8,7 @@
 #
 # 이 스크립트는 파일을 지우지 않습니다. 옛 판은 스킬 폴더 바깥의 skills-backup\ 으로 옮겨 둘 뿐입니다.
 # 무엇을 할지 먼저 보여주고 「y」를 받은 뒤에만 설치합니다. 그냥 엔터는 언제나 「안 한다」입니다.
-# 같은 이름이 이미 있으면, 하나씩 따로 묻고 <이름>.old-날짜 로 옆에 치워둡니다.
+# 같은 이름이 이미 있으면, 하나씩 따로 묻고 skills-backup\<이름>.old-날짜 로 옮겨 둡니다.
 param(
   [switch]$Local, [switch]$All, [switch]$List,
   [Parameter(ValueFromRemainingArguments=$true)][string[]]$Names
