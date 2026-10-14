@@ -146,7 +146,7 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 ```bash
 find ~/.claude/skills/sns-writing -name '*.md' | wc -l        # 11 이 나오면 성공
 find ~/.claude/skills/source-to-lead -name '*.md' | wc -l     # 10 이 나오면 성공
-find ~/.claude/skills/material-harvest -name '*.md' | wc -l   # 3 이 나오면 성공
+find ~/.claude/skills/material-harvest -name '*.md' | wc -l   # 5 가 나오면 성공
 ```
 
 **윈도우 (PowerShell)**
@@ -154,10 +154,10 @@ find ~/.claude/skills/material-harvest -name '*.md' | wc -l   # 3 이 나오면 
 ```powershell
 (Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\sns-writing").Count        # 11
 (Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\source-to-lead").Count     # 10
-(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\material-harvest").Count   # 3
+(Get-ChildItem -Recurse -File -Filter *.md "$env:USERPROFILE\.claude\skills\material-harvest").Count   # 5
 ```
 
-**깐 도구마다 11 · 10 · 3 이 나오면 성공입니다.** 하나만 까셨으면 그 줄만 보시면 됩니다.
+**깐 도구마다 11 · 10 · 5 가 나오면 성공입니다.** 하나만 까셨으면 그 줄만 보시면 됩니다.
 
 ### 🔴 안 불릴 때 — 십중팔구 이것입니다
 
@@ -178,7 +178,7 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 **이때는 확인 명령도 달라집니다** — 홈이 아니라 **지금 폴더**를 봅니다.
 
 ```bash
-find ./.claude/skills -name '*.md' | wc -l      # 문서 24개 (셋 다 깔았을 때)
+find ./.claude/skills -name '*.md' | wc -l      # 문서 26개 (셋 다 깔았을 때)
 ```
 
 ### 하나만 깔고 싶으면 — 골라서 설치할 수 있습니다
@@ -246,7 +246,7 @@ D=$(mktemp -d) && git clone --depth 1 -q https://github.com/Kara75-PM/kara-os.gi
 > 클로드는 지금 어느 폴더에서 일하는지 알고 있어서 **틀릴 수가 없습니다.**
 
 만들어지면 **예시가 채워진 파일**이 들어 있습니다. 지우고 내 이야기로 바꾸면 됩니다.
-어느 도구가 만드느냐에 따라 **3개(`sns-writing`) 또는 4개(`source-to-lead`)** 입니다.
+어느 도구가 만드느냐에 따라 **3개(`sns-writing`) · 4개(`source-to-lead`) · 2개(`material-harvest`)** 입니다.
 
 | 파일 | 뭘 적나 |
 |---|---|
@@ -331,7 +331,7 @@ kara-os/
 > **`references/` 가 없어도 도구는 돕니다.** `SKILL.md` 안에 핵심 요약이 들어 있습니다.
 > 다만 예시 문장이 빠지므로 **통째로 받으시는 게 좋습니다.**
 >
-> `material-harvest` 는 **`SKILL.md` · `README.md` · `EXAMPLE.md` 세 장**입니다. 견본(`templates/`)은 따로 없고, 「재료 폴더」는 `sns-writing` 과 같은 것을 씁니다.
+> `material-harvest` 는 **`SKILL.md` · `README.md` · `EXAMPLE.md` 세 장에 견본(`templates/`) 두 장**입니다. `references/` 는 없고, 「재료 폴더」는 `sns-writing` 과 같은 것을 씁니다.
 
 ---
 

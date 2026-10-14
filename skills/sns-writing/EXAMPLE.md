@@ -40,7 +40,7 @@ $ D=$(mktemp -d) && git clone --depth 1 https://github.com/Kara75-PM/kara-os.git
 **`y`** 를 쳤습니다.
 
 ```
-[OK] material-harvest  문서 3개
+[OK] material-harvest  문서 5개
 [OK] sns-writing  문서 11개
 [OK] source-to-lead  문서 10개
 
