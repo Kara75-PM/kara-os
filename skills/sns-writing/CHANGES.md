@@ -114,6 +114,7 @@ references/channel-instagram.md    ← 원본 cardnews.md 를 채널 파일로 �
 - 믿게 만드는 글을 **「본문에는 링크 없음. 프로필 안내 한 줄은 된다」** 로 맞췄다 (`README.md` · `SKILL.md` · `references/placement.md` · `EXAMPLE.md`).
 - `EXAMPLE.md` 의 4편(「몇 명이 받아 갔다」)을 **믿게 만드는 글**로 바꿨다. 결과만 알리고 링크는 뺐다 — 믿게 만드는 글 셋에 보내는 글 하나.
   2편 전용이던 링크는 **「인스타 프로필용 링크 하나」** 로 이름을 바꿨다.
+- 6단계 순서에 **「결과만 알리는 글은 보내는 글 뒤에 와도 된다」** 를 붙였다. 예제 4편(9/16)이 보내는 글인 3편(9/13) 뒤에 오기 때문이다 (`SKILL.md` · `EXAMPLE.md`).
 - `references/utm.md` 끝을 **「세는 표를 만드는 것까지 이 스킬이 한다. 숫자는 사용자가 각 서비스 화면에서 가져온다」** 로 고쳤다. `SKILL.md` 7단계와 맞춘 것이다.
 - `templates/who-i-am.md` 는 sns-writing 과 같게 고쳤다.
 
