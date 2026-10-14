@@ -94,3 +94,30 @@ references/channel-instagram.md    ← 원본 cardnews.md 를 채널 파일로 �
 | `references/cardnews.md` | `references/channel-instagram.md` | 이름 바꾸고 채널 파일로 승격 |
 | — | `references/channel-threads.md` | **새로 만듦** (본체에서 떼어냄) |
 | — | `CHANGES.md` | **새로 만듦** (이 문서) |
+
+---
+
+## 2026-10-14 · 세 스킬 문서끼리 어긋난 곳 맞춤
+
+원본과는 상관없는, 카라 OS 안에서의 손질이다. 한 번에 묶어 적는다.
+
+**sns-writing**
+
+- `EXAMPLE.md` 에 **「쓰기 전에 사실을 맞춥니다」** 장면을 넣었다. 2단계(사실 확인)가 예제에 없었다.
+  글에 나오는 숫자(3초 · 30초 · 버튼 일곱 개 · 다섯 개 · 두 개)는 이제 **전부 클로드가 묻고 사용자가 답한 것**이다.
+- 같은 장면에서 **「언제 올리실 건가요?」** 를 묻고, 올리는 날(9월 9일) 기준으로 1번 칸의 「어제」를 정한다.
+- `templates/who-i-am.md` 의 「캐지 말 폴더」 칸 설명을 **「여기 적은 폴더만 잠긴다. 골라도 열지 않는다」** 로 고쳤다.
+
+**source-to-lead**
+
+- 링크 비율을 **「보내는 글 하나에 믿게 만드는 글 둘 이상」** 으로 맞췄다 (`README.md` · `SKILL.md` 원칙 2).
+- 믿게 만드는 글을 **「본문에는 링크 없음. 프로필 안내 한 줄은 된다」** 로 맞췄다 (`README.md` · `SKILL.md` · `references/placement.md` · `EXAMPLE.md`).
+- `EXAMPLE.md` 의 4편(「몇 명이 받아 갔다」)을 **믿게 만드는 글**로 바꿨다. 결과만 알리고 링크는 뺐다 — 믿게 만드는 글 셋에 보내는 글 하나.
+  2편 전용이던 링크는 **「인스타 프로필용 링크 하나」** 로 이름을 바꿨다.
+- `references/utm.md` 끝을 **「세는 표를 만드는 것까지 이 스킬이 한다. 숫자는 사용자가 각 서비스 화면에서 가져온다」** 로 고쳤다. `SKILL.md` 7단계와 맞춘 것이다.
+- `templates/who-i-am.md` 는 sns-writing 과 같게 고쳤다.
+
+**material-harvest**
+
+- 🔒 잠긴 폴더는 **사용자가 직접 골라도 이 스킬에서는 열지 않는다.** 열려면 `who-i-am.md` 에서 잠금을 먼저 풀라고 안내한다 (`SKILL.md` · `README.md` · `EXAMPLE.md` · 견본).
+- `README.md` 를 **「who-i-am.md 에 적어 둔 폴더만 잠깁니다」** 로 고치고, `SKILL.md` 도 같게 맞췄다.
