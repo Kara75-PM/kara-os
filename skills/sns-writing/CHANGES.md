@@ -121,3 +121,7 @@ references/channel-instagram.md    ← 원본 cardnews.md 를 채널 파일로 �
 
 - 🔒 잠긴 폴더는 **사용자가 직접 골라도 이 스킬에서는 열지 않는다.** 열려면 `who-i-am.md` 에서 잠금을 먼저 풀라고 안내한다 (`SKILL.md` · `README.md` · `EXAMPLE.md` · 견본).
 - `README.md` 를 **「who-i-am.md 에 적어 둔 폴더만 잠깁니다」** 로 고치고, `SKILL.md` 도 같게 맞췄다.
+
+**예제 맨 끝 줄**
+
+- sns-writing · source-to-lead 의 `EXAMPLE.md` 맨 끝 줄에 **이번에 손으로 고친 곳**을 밝혔다. material-harvest 예제와 같은 방식이다.
