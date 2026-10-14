@@ -70,7 +70,8 @@ references/channel-instagram.md    ← 원본 cardnews.md 를 채널 파일로 �
 **앞에 순서를 넣었다.**
 1. 재료 폴더의 `material-stash.md` 를 **먼저** 읽는다
 2. 거기서 카테고리에 맞춰 후보를 뽑는다
-3. 비어 있을 때만 질문으로 캐낸다
+3. 비어 있으면 *"대화에서 캐 올까요?"* 를 먼저 제안한다 (`material-harvest` 로 넘김)
+4. 마다하거나 `material-harvest` 가 없을 때만 질문으로 캐낸다
 
 ---
 
@@ -122,6 +123,14 @@ references/channel-instagram.md    ← 원본 cardnews.md 를 채널 파일로 �
 
 - 🔒 잠긴 폴더는 **사용자가 직접 골라도 이 스킬에서는 열지 않는다.** 열려면 `who-i-am.md` 에서 잠금을 먼저 풀라고 안내한다 (`SKILL.md` · `README.md` · `EXAMPLE.md` · 견본).
 - `README.md` 를 **「who-i-am.md 에 적어 둔 폴더만 잠깁니다」** 로 고치고, `SKILL.md` 도 같게 맞췄다.
+
+**그 밖에 함께 맞춘 것**
+
+- source-to-lead `README.md` · 맨 위 `README.md` 의 예시 표에서 링크가 붙은 글을 「결과 알림」에서 「신청 안내」로 바꿨다. 결과만 알리는 글에는 링크를 붙이지 않기 때문이다. 인스타 칸은 「프로필 안내 한 줄」로, 맨 위 README 의 비율은 「보내는 글 한 편에 믿게 만드는 글 두 편 이상」으로 맞췄다. (설치 안내는 건드리지 않았다)
+- source-to-lead `SKILL.md` 0단계 그림의 「링크 없음」을 「본문 링크 없음」으로 바꿨다.
+- source-to-lead `EXAMPLE.md` 1편 날짜를 9/10 에서 9/9 로 바꿨다. sns-writing 예제에서 같은 글을 9월 9일에 올리고, 그래야 1번 칸의 「어제」(9월 8일)가 맞는다.
+- material-harvest 부르는 말에서 *"쓸 만한 얘기 뭐 있었지"* 를 뺐다. 캐라는 말이 아니라 글감을 찾는 말이라 sns-writing 이 먼저 받는다.
+- 위 「5. 소재 파일에…」의 순서를 지금 `topic-mining.md` 와 같게 고쳤다.
 
 **예제 맨 끝 줄**
 
