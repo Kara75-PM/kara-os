@@ -27,7 +27,7 @@
 소재 좀 캐줘
 ```
 ```
-오늘 글감 있어?
+오늘 대화에서 소재 캐줘
 ```
 ```
 다른 창에서 소재 긁어와줘
@@ -116,7 +116,7 @@ $d = Join-Path $env:TEMP ("kara-os-" + [guid]::NewGuid()); git clone --depth 1 h
 find ~/.claude/skills/material-harvest -name '*.md'
 ```
 
-**문서 3개**(SKILL · README · EXAMPLE)가 나오면 성공입니다.
+**문서 5개**(SKILL · README · EXAMPLE · 견본 둘)가 나오면 성공입니다.
 
 ### 🔴 설치했는데 안 불릴 때
 
@@ -154,6 +154,7 @@ kara-os-private/
 같이 쓰는 저장소면 그 사실을 먼저 알려주고 묻습니다.
 
 > **`sns-writing` 을 이미 쓰고 계시면 같은 폴더를 씁니다.** 새로 안 만듭니다.
+> 둘 다 깔려 있으면 이 말은 **`sns-writing` 이 받습니다.** 어느 쪽이 받아도 같은 폴더, 같은 견본입니다.
 
 ---
 
